@@ -2,7 +2,7 @@
 //
 // No hints this time! ;)
 
-// I AM NOT DONE
+
 
 #[derive(Debug)]
 enum Message {
@@ -11,7 +11,7 @@ enum Message {
 
 fn main() {
     println!("{:?}", Message::Quit);
-    println!("{:?}", Message::Echo);
-    println!("{:?}", Message::Move);
-    println!("{:?}", Message::ChangeColor);
+    println!("{:?}", Message::Echo(String::from("Hello")));
+    println!("{:?}", Message::Move{x:5, y:15});
+    println!("{:?}", Message::ChangeColor(255,0,0));
 }
