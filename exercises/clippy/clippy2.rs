@@ -7,9 +7,8 @@
 fn main() {
     let mut res = 42;
     let option = Some(12);
-    match option{
-        Some(x) => res += x,
-        None => (),
+    if let Some(x) = option {
+        res+=x;
     }
     println!("{}", res);
 }

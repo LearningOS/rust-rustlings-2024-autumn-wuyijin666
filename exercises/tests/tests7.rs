@@ -35,15 +35,7 @@
 // hint.
 
 
-
-fn main() {
-    let timestamp = std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .unwrap()
-            .as_secs();
-    // 将时间戳设置为环境变量 TEST_FOO
-    println!("cargo:rustc-env=TEST_FOO={}", timestamp);
-}
+fn main() {}
 
 #[cfg(test)]
 mod tests {

@@ -37,9 +37,9 @@ fn main() {
             let sum: u32 = child_numbers.iter().filter(|&&n| n % 8 == offset).sum();
             println!("Sum of offset {} is {}", offset, sum);
         });
-        join_handles.push(handle);
+        joinhandles.push(handle);
     }
-    for handle in join_handles.into_iter() {
+    for handle in joinhandles.into_iter() {
         handle.join().unwrap();
     }
 }

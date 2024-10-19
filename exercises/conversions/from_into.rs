@@ -41,28 +41,33 @@ impl Default for Person {
 // Person Otherwise, then return an instantiated Person object with the results
 
 
-
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
-       if s.is_empty(){
-        return Person::default();
-       }
+        if s.is_empty() {
+            return Person::default();
+        }
 
-       let parts: Vec<&str> = s.split(",").collect();
-       if parts.len() < 2{
-        return Person::default();
-       }
-       let name = parts[0].trim();
-       if name.is_empty(){
-        return Person::default();
-       }
-       let age_str = parts[1].trim();
-       match age_str.parse::<usize>(){
-        Ok(age) => Person{name, name.to_string(), age},
-        Err(_) => Person::default(),
-       }
+        let parts: Vec<&str> = s.split(',').collect();
+
+        // Check if there are exactly two parts
+        if parts.len() != 2 {
+            return Person::default();
+        }
+
+        let name = parts[0].to_string();
+        if name.is_empty() {
+            return Person::default();
+        }
+
+        let age = match parts[1].parse::<usize>() {
+            Ok(age) => age,
+            Err(_) => return Person::default(),
+        };
+
+        Person { name, age }
     }
 }
+
 
 fn main() {
     // Use the `from` function

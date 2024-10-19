@@ -29,7 +29,7 @@ fn main() {
         // TODO: a struct is returned from thread::spawn, can you use it?
         match handle.join(){
             Ok(result) => results.push(result),
-            Err(_) => println("Thread panicked"),
+            Err(_) => println!("Thread panicked"),
         }
     }
 
