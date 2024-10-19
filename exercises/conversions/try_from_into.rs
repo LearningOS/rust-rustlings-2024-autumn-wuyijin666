@@ -27,7 +27,7 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
+
 
 // Your task is to complete this implementation and return an Ok result of inner
 // type Color. You need to create an implementation for a tuple of three
@@ -41,6 +41,35 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        let mut res: Color = Color { red: 0, green: 0, blue: 0 };
+        let mut flag = true;
+        let v0 = tuple.0;
+        if v0 < 0 || v0 > 255 {
+            flag = false;
+        }
+        else {
+            res.red = v0 as u8;
+        }
+        let v1 = tuple.1;
+        if v1 < 0 || v1 > 255 {
+            flag = false;
+        }
+        else {
+            res.green = v1 as u8;
+        }
+        let v2 = tuple.2;
+        if v2 < 0 || v2 > 255 {
+            flag = false;
+        }
+        else {
+            res.blue = v2 as u8;
+        }
+        if flag {
+            Ok(res)
+        }
+        else {
+            Err(Self::Error::IntConversion)
+        }
     }
 }
 
@@ -48,15 +77,78 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        let mut res: Color = Color { red: 0, green: 0, blue: 0 };
+        let mut flag = true;
+        let mut a0 = *arr.get(0).unwrap();
+        if a0 < 0 || a0 > 255 {
+            flag = false;
+        }
+        else {
+            res.red = a0 as u8;
+        }
+        let mut a1 = *arr.get(1).unwrap();
+        if a1 < 0 || a1 > 255 {
+            flag = false;
+        }
+        else {
+            res.green = a1 as u8;
+        }
+        let mut a2 = *arr.get(2).unwrap();
+        if a2 < 0 || a2 > 255 {
+            flag = false;
+        }
+        else {
+            res.blue = a2 as u8;
+        }
+        if flag {
+            Ok(res)
+        }
+        else {
+            Err(Self::Error::IntConversion)
+        }
     }
 }
+
 
 // Slice implementation
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            return Err(Self::Error::BadLen);
+        }
+        let mut res: Color = Color { red: 0, green: 0, blue: 0 };
+        let mut flag = true;
+        let mut s0 = *slice.get(0).unwrap();
+        if s0 < 0 || s0 > 255 {
+            flag = false;
+        }
+        else {
+            res.red = s0 as u8;
+        }
+        let mut s1 = *slice.get(1).unwrap();
+        if s1 < 0 || s1 > 255 {
+            flag = false;
+        }
+        else {
+            res.green = s1 as u8;
+        }
+        let mut s2 = *slice.get(2).unwrap();
+        if s2 < 0 || s2 > 255 {
+            flag = false;
+        }
+        else {
+            res.blue = s2 as u8;
+        }
+        if flag {
+            Ok(res)
+        }
+        else {
+            Err(Self::Error::IntConversion)
+        }
     }
 }
+
 
 fn main() {
     // Use the `try_from` function

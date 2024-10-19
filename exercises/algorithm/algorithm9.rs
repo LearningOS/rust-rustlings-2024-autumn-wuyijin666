@@ -2,10 +2,11 @@
 	heap
 	This question requires you to implement a binary heap function
 */
-// I AM NOT DONE
+
 
 use std::cmp::Ord;
 use std::default::Default;
+use std::mem::swap;
 
 pub struct Heap<T>
 where
@@ -38,6 +39,17 @@ where
 
     pub fn add(&mut self, value: T) {
         //TODO
+        self.items.push(value);
+        self.count += 1;
+        let mut idx = self.count;
+        while idx != 1 {
+            let fa = self.parent_idx(idx);
+            if (self.comparator)(&self.items[idx], &self.items[fa]) {
+                // swap(&mut self.items[idx], &mut self.items[fa]);
+                self.items.swap(idx, fa);
+                idx = fa;
+            } else { break; }
+        }
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -85,7 +97,32 @@ where
 
     fn next(&mut self) -> Option<T> {
         //TODO
-		None
+        if self.is_empty() {
+            return None;
+        }
+        // swap(&mut items[0], &mut items[items.len() - 1]);
+        self.items.swap(1, self.count);
+        self.count -= 1;
+        let mut idx = 1;
+
+        // head adjust
+        while self.left_child_idx(idx) < self.count {
+            let left = self.left_child_idx(idx);
+            let right = self.right_child_idx(idx);
+            let mut minmax = idx;
+            if left <= self.count && (self.comparator)(&self.items[left], &self.items[minmax]) {
+                minmax = left;
+            }
+            if right <= self.count && (self.comparator)(&self.items[left], &self.items[minmax]) {
+                minmax = left;
+            }
+            if minmax == idx { break; }
+            // swap(&mut items[idx], &mut items[largest]);
+            self.items.swap(idx, minmax);
+            idx = minmax;
+        }
+
+        self.items.pop()
     }
 }
 
